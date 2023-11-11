@@ -9,12 +9,12 @@ The following steps are taken to create an automated task that onboard 20 new us
 -	Editing the authorized_keys file of the current user in the server from the home directory :`$ nano .ssh/authorized_keys`
 -	Pasting the following public key:
 `ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCzKZyicHxIkklSrNlxsJyyTrcIdBIt84Z0cQb3R4k0jH53kxkaT5hP8tfWTe62LXi7vV86fY+SX7TBNM76XGCbw/6vrMGegm6J1x2i1AiLNwq5nqTjOGn0AIwku4IlCCLAB7tdfRyVuCarmBlwny3lzRyybIUAWXR/D6vpN09MsDILbKdhay+Q/p9OUBMSLPqXdY/QIh/Oe3rVv1lwY3AohNfq7V3tO88zKswfA5iiexNiSYX1myT0OrX8cBE771j9quoNZhQgaLI1mIMtAvnHQChrn9k2nUaO/BMBCQGol5XzGv1ado7hgoVPoluIUD+FGNo/pH4zcmDLICH6drXY/C9MESnkMUPLFxBXKO/OitApY71vRao9nAhAwpVMsy6FqiOb5uawhvhoHYIHTV/f4EtagVagRMP2PxYMYR6jykIV4MPJTkCm+lGhTyMlRu+qRQjdLn8AAtHf4aEV8dIkoGh088DI7eA/4o0wz4OV4upH5ewSFS+5IHmRECEW5Nc= `
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/auxProject/copied%20and%20paste%20the%20pub_key%20in%20current%20user%20in%20server.png)
+![](./img/auxProject/copied%20and%20paste%20the%20pub_key%20in%20current%20user%20in%20server.png)
 
 -	Creating a new folder and moving into it: `$ mkdir shell && cd shell`
 -	Creating a file that holds the names of the users: `$ touch names.csv`
 -	Inputting the names: `$ nano names.csv`
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/auxProject/names.csv%20file.png)
+![](./img/auxProject/names.csv%20file.png)
 -	Creating a shell script file in the same folder that will automate the task: `$ touch addusers.sh`
 -	Opening the file: `$ nano addusers.sh`
 -	Entering the following lines of commands:
@@ -70,9 +70,9 @@ done
 ```
 
 -	 Running the shell script file: `$ ./addusers.sh`
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/auxProject/executing%20the%20shell%20script-1.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/auxProject/executing%20the%20shell%20script-2.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/auxProject/executing%20the%20shell%20script-3.png)
+![](./img/auxProject/executing%20the%20shell%20script-1.png)
+![](./img/auxProject/executing%20the%20shell%20script-2.png)
+![](./img/auxProject/executing%20the%20shell%20script-3.png)
 
 ## Step 2:	On the client
 
@@ -116,22 +116,22 @@ O5+Kt+KfU5M9uAN7tob3+yG18ZJt9FY+5FTK1TV5LmF5OTGBN9XyehT2Miqa8sSu80rwpN
 nhe+U/XswAp9KEVYkSIjFeoy/amsOP+qvRke1dKWBsU12IbhnMgjDHVggkYV52l7d9S2bx
 kmaSGj362OnCCNAAAACWRhcmVARGFyZQE=
 -----END OPENSSH PRIVATE KEY-----`
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/auxProject/editing%20the%20private%20key%20file%20for%20the%20client.png)
+![](./img/auxProject/editing%20the%20private%20key%20file%20for%20the%20client.png)
 -	Updating the public key file: `$ nano .ssh/id_rsa.pub`
 -	Pasting the following public key which is the same as the one pasted on the server
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/auxProject/updating%20the%20public%20key%20file%20in%20the%20client.png)
+![](./img/auxProject/updating%20the%20public%20key%20file%20in%20the%20client.png)
 
 ## Step 3: Connecting to the new users created on the server 
 
 On the client machine: Testing Few users 
 -	**Connecting to the user victor: ssh victor@192.168.43.55**
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/auxProject/connecting%20to%20the%20user%20victor.png)
+![](./img/auxProject/connecting%20to%20the%20user%20victor.png)
 -	**Connecting to the user David: ssh david@192.168.43.55**
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/auxProject/connecting%20to%20the%20user%20david.png)
+![](./img/auxProject/connecting%20to%20the%20user%20david.png)
 -	**Connecting to the user Luarel: ssh luarel@192.168.43.55**
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/auxProject/connecting%20to%20the%20user%20luarel.png)
+![](./img/auxProject/connecting%20to%20the%20user%20luarel.png)
 -	**Connecting to the user Raymond: ssh raymond@192.168.43.55**
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/auxProject/connecting%20to%20the%20user%20raymond.png)
+![](./img/auxProject/connecting%20to%20the%20user%20raymond.png)
 -	**Connecting to the user Stella: ssh stella@192.168.43.55**
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/auxProject/connecting%20to%20the%20user%20stella.png)
+![](./img/auxProject/connecting%20to%20the%20user%20stella.png)
 

@@ -7,14 +7,14 @@ The following are the steps I took to implementing LVM and basic web solution-wo
 ## STEP 1:	SETTING UP AND ATTACHING EBS VOLUMES TO AN EC2 SERVER FOR THE “WEB SERVER”
 -	Launching a new EC2 instance(Red Hat Enterprise Linux 8 HVM) that will serve as a “web server”.
 -	Creating 3 EBS volumes in the same Availability Zone with my EC2 instance created and attaching them to the EC2 instance.
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/creating%20and%20attaching%20volumes.png)
+![](./img/project6/creating%20and%20attaching%20volumes.png)
 
 ## STEP 2:	PARTITIONING THE VOLUMES ATTACHED TO THE EC2 INSTANCE AND CREATING LOGICAL VOLUME WITH IT
 After a successful ssh connection to the EC2 instance on my terminal, running the following commands:
 -	To inspect what block devices are attached to the server: `$ lsblk`
 -	To see all mounts and free space: `$	df –h`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/disk%20attached%20on%20the%20server.png)
+![](./img/project6/disk%20attached%20on%20the%20server.png)
 
 **Creating a single partition on each of the 3 disks:**
 -	**For xdvf disk:** `$ gdisk /dev/xvdf`
@@ -23,30 +23,30 @@ After a successful ssh connection to the EC2 instance on my terminal, running th
 -	Accepting all the defaults settings and selecting Linux LVM type of partition by entering 8E00 code and hit enter
 -	Entering the ‘w’ key to write the new partition created and confirming with the ‘y’ and hit enter.
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/creating%20partition%20for%20xvdf%20drive.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/creating%20partition%20for%20xvdf%20drive-2.png)
+![](./img/project6/creating%20partition%20for%20xvdf%20drive.png)
+![](./img/project6/creating%20partition%20for%20xvdf%20drive-2.png)
 
  **Following the same process to create single partition for the xvdg and xvdh drives:**
  
- ![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/creating%20partition%20for%20xvdg%20drive.png)
- ![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/creating%20partition%20for%20xvdh%20drive.png)
+ ![](./img/project6/creating%20partition%20for%20xvdg%20drive.png)
+ ![](./img/project6/creating%20partition%20for%20xvdh%20drive.png)
  
 -	Installing lvm2 package: `$ sudo yum install lvm2`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/installing%20lvm2.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/installing%20lvm2%20-2.png)
+![](./img/project6/installing%20lvm2.png)
+![](./img/project6/installing%20lvm2%20-2.png)
 
 -	Checking for available partitions: `$ sudo lvmdiskscan`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/to%20check%20for%20available%20partition.png)
+![](./img/project6/to%20check%20for%20available%20partition.png)
 
 -	To mark each of the 3 disks as physical volume: `$ sudo pvcreate /dev/xvdf1 /dev/xvdg1 /dev/xvdh1`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/creating%20physical%20volume%20from%20the%20partition.png)
+![](./img/project6/creating%20physical%20volume%20from%20the%20partition.png)
 
 -	To verify that it has been created:`$ sudo pvs`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/to%20verify%20the%20pv%20created.png)
+![](./img/project6/to%20verify%20the%20pv%20created.png)
 
 -	Adding the 3 PVs to a volume group(VG) called ‘webdata-vg’: `sudo vgcreate webdata-vg /dev/xvdf1 /dev/xvdh1 /dev/xvdg1`
 -	To verify that the VG has been created: `$ sudo vgs`
@@ -57,13 +57,13 @@ After a successful ssh connection to the EC2 instance on my terminal, running th
 `$ sudo lvcreate –n logs-lv –L 14G webdata-vg`
 -	To verify that the logical volumes are created: `$ sudo lvs`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/vgcreate%20to%20lvs.png)
+![](./img/project6/vgcreate%20to%20lvs.png)
 
 -	Verifying the entire setup: `$ sudo vgdisplay –v`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/vgdisplay.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/vgdisplay-2.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/to%20view%20the%20whole%20drives.png)
+![](./img/project6/vgdisplay.png)
+![](./img/project6/vgdisplay-2.png)
+![](./img/project6/to%20view%20the%20whole%20drives.png)
 
 ## STEP 3: FORMATTING AND MOUNTING THE LOGICAL VOLUMES
 -	Formatting the 2 logical volumes with ext4 filesystem: 
@@ -72,27 +72,27 @@ After a successful ssh connection to the EC2 instance on my terminal, running th
 
 `$ sudo mkfs –t ext4 /dev/webdata-vg/logs-lv`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/formatting%20the%20logical%20volumes.png)
+![](./img/project6/formatting%20the%20logical%20volumes.png)
 
 -	Creating a directory where the website files will be stored: `$ sudo mkdir –p /var/www/html`
 -	Mounting apps-lv logical volume on /var/www/html: `$ sudo mount /dev/webdata-vg/apps-lv /var/www/html`
 -	Creating directory to store backup of log data: `$ sudo mkdir –p /home/recovery/logs`
 -	Using rsync utility to backup all the files in the log directory ***/var/log into /home/recovery/logs***: `$ sudo rsync –av /var/log/. /home/recovery/logs/`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/mounting%20apps-lv%20-%20rsync.png)
+![](./img/project6/mounting%20apps-lv%20-%20rsync.png)
 
 -	Mounting logs-lv logical volume on ***/var/log directory***: `$ sudo mount /dev/webdata-vg/logs-lv /var/log`
 -	 Restoring the log files back into ***/var/log***: `$ sudo rsync –av /home/recovery/logs. /var/log`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/mounting%20logs%20-%20rsync.png)
+![](./img/project6/mounting%20logs%20-%20rsync.png)
 
 -	Updating the fstab file so that mount configuration will persist after restart of the server: `$ sudo vi /etc/fstab`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/updating%20the%20fstab%20file.png)
+![](./img/project6/updating%20the%20fstab%20file.png)
 
 -	To know the UUID of the device to mount: `$ sudo blkid`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/sudo%20blkid.png)
+![](./img/project6/sudo%20blkid.png)
 
 -	Testing  configuration and reloading the daemon:
 
@@ -101,7 +101,7 @@ After a successful ssh connection to the EC2 instance on my terminal, running th
 `$ sudo systemctl daemon-reload`
 -	Verifying the setup: `$ df -h`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/checking%20for%20a%20successful%20mount.png)
+![](./img/project6/checking%20for%20a%20successful%20mount.png)
 
 ## STEP 4: PREPARING THE DATABASE SERVER
 
@@ -109,47 +109,47 @@ In setting up an EC2 instance for Database server, The whole setup for the web s
 
 -	Creating the two logical volumes db-lv and logs-lv
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/pvcreate%20to%20creating%20logival%20volume.png)
+![](./img/project6/pvcreate%20to%20creating%20logival%20volume.png)
 
 -	Verifying the whole setup
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/to%20check%20the%20whole%20setup.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/to%20verify%20the%20whole%20setup-2.png)
+![](./img/project6/to%20check%20the%20whole%20setup.png)
+![](./img/project6/to%20verify%20the%20whole%20setup-2.png)
 
 -	Formatting the logical volumes
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/to%20format%20the%20LV.png)
+![](./img/project6/to%20format%20the%20LV.png)
 
 -	Performing rsync operation and mounting the two logical volumes
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/performing%20rsync.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/performing%20rsync-2.png)
+![](./img/project6/performing%20rsync.png)
+![](./img/project6/performing%20rsync-2.png)
 
 -	Updating the fstab file
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/adding%20the%20drives%20in%20fstab.png)
+![](./img/project6/adding%20the%20drives%20in%20fstab.png)
 
 -	Verifying the whole setup
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/logical%20volume%20mounted.png)
+![](./img/project6/logical%20volume%20mounted.png)
 
 ## STEP 5: INSTALLING WORDPRESS ON THE WEB SERVER EC2 INSTANCE
 1.	Updating the server: `$ sudo yum -y update`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/updating%20the%20web%20server.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/updating%20the%20web%20server-2.png)
+![](./img/project6/updating%20the%20web%20server.png)
+![](./img/project6/updating%20the%20web%20server-2.png)
 
 2. Installing wget, Apache and its dependencies: `$ sudo yum -y install wget httpd php php-mysqlnd php-fpm php-json`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/installing%20wget%20and%20apache.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/installing%20wget%20and%20apache-2.png)
+![](./img/project6/installing%20wget%20and%20apache.png)
+![](./img/project6/installing%20wget%20and%20apache-2.png)
 
 3. Starting Apache:
 -	`$ sudo systemctl enable httpd`
 
 -	`$ sudo systemctl start httpd`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/systemctl%20enable%20and%20start%20httpd.png)
+![](./img/project6/systemctl%20enable%20and%20start%20httpd.png)
 
 4. **Installing PHP and its dependencies:**
 
@@ -167,14 +167,14 @@ setsebool -P httpd_execmem 1
  
   - **Results from the installations**
   
-  ![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/installing%20from%20fedora%20project.png)
-  ![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/installing%20from%20remirepo.png)
-  ![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/module%20list%20php.png)
-  ![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/module%20reset.png)
-  ![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/module%20enable%20php.png)
-  ![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/installing%20php%20dependencies.png)
-  ![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/installing%20php%20dependencies-2.png)
-  ![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/restarting%20Apache.png)
+  ![](./img/project6/installing%20from%20fedora%20project.png)
+  ![](./img/project6/installing%20from%20remirepo.png)
+  ![](./img/project6/module%20list%20php.png)
+  ![](./img/project6/module%20reset.png)
+  ![](./img/project6/module%20enable%20php.png)
+  ![](./img/project6/installing%20php%20dependencies.png)
+  ![](./img/project6/installing%20php%20dependencies-2.png)
+  ![](./img/project6/restarting%20Apache.png)
   
 - Restarting Apache: `$ sudo systemctl restart httpd`
 
@@ -183,7 +183,7 @@ setsebool -P httpd_execmem 1
 -	Downloading wordpress: `$ sudo wget http://wordpress.org/latest.tar.gz`
 -	Extracting the file: `$ sudo tar xzvf latest.tar.gz`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/installing%20wordpress%20and%20archiving%20latest%20file.png)
+![](./img/project6/installing%20wordpress%20and%20archiving%20latest%20file.png)
 
 -	Removing the archived folder: `$ sudo rm -rf latest.tar.gz`
 -	Renaming the file ***wp-config-sample.php*** to ***wp-config.php***: `$ cp wordpress/wp-config-sample.php wordpress/wp-config.php`
@@ -193,23 +193,23 @@ setsebool -P httpd_execmem 1
 -	Changing the ownership of the wordpress directory: `$ sudo chown -R apache:apache /var/www/html/wordpress`
 -	Setting the SELinux Policies: `$ sudo setsebool -P httpd_can_network_connect=1`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/configuring%20SELinux%20policies.png)
+![](./img/project6/configuring%20SELinux%20policies.png)
 
 ## STEP 6: INSTALLING MYSQL ON THE DATABASE SERVER EC2 INSTANCE
 -	Configuring the database server: `$ sudo yum update`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/upgrading%20db%20server.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/upgrading%20db%20server-2.png)
+![](./img/project6/upgrading%20db%20server.png)
+![](./img/project6/upgrading%20db%20server-2.png)
 
 -	Installing MySQL: `$ sudo yum install mysql-server`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/installing%20mysql-server.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/installing%20mysql-server-2.png)
+![](./img/project6/installing%20mysql-server.png)
+![](./img/project6/installing%20mysql-server-2.png)
 
 -	Restarting mysqld services: `$ sudo systemctl restart mysqld`
 -	Enabling mysqld services: `$ sudo systemctl enable mysqld`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/restarting%20and%20enabling%20mysqld%20service.png)
+![](./img/project6/restarting%20and%20enabling%20mysqld%20service.png)
 
 ## STEP 7: CONFIGURING DB TO WORK WITH WORDPRESS
 -	Activating the mysql shell: `$ sudo mysql`
@@ -219,32 +219,32 @@ setsebool -P httpd_execmem 1
 - Flushing the privileges so that MySQL will begin to use them: ` mysql> FLUSH PRIVILEGES;`
 -	Exiting from MySQL shell: `mysql> exit`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/creating%20user%20in%20db.png)
+![](./img/project6/creating%20user%20in%20db.png)
 -	Adding a rule to the database server security group to be able to listen to TCP port 3306 and allow access to the web server IP address only.
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/configuring%20security%20group%20of%20the%20db%20server.png)
+![](./img/project6/configuring%20security%20group%20of%20the%20db%20server.png)
   
 ## STEP 8: CONFIGURING WORDPRESS IN THE WEB SERVER TO CONNECT TO REMOTE DATABASE
 -	Installing mysql client: `$ sudo yum install MySQL`
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/installing%20mysql%20in%20web%20server.png)
+![](./img/project6/installing%20mysql%20in%20web%20server.png)
 
 -	Connecting to the database server with MySQL: ` $ sudo mysql -u somex -p -h 172.31.29.209`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/connecting%20to%20the%20mysql-server.png)
+![](./img/project6/connecting%20to%20the%20mysql-server.png)
 
 -	Updating the **wp-config.php** file settings:
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/configuring%20wp-config.php%20file.png)
+![](./img/project6/configuring%20wp-config.php%20file.png)
 
 -	Adding a rule to the web server security group to be able listen to TCP port 80 and allow connection from any IP address.
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/adding%20http%20rule%20to%20web%20server.png)
+![](./img/project6/adding%20http%20rule%20to%20web%20server.png)
 
 **RESULTS**
 -	Accessing the web server with its IP address from my browser: `http://18.207.150.146/wordpress/`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/result-1.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/result-2.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/result-3.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project6/result-4.png)
+![](./img/project6/result-1.png)
+![](./img/project6/result-2.png)
+![](./img/project6/result-3.png)
+![](./img/project6/result-4.png)
 

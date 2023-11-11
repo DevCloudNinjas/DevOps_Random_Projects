@@ -12,7 +12,7 @@ The following outlines the steps:
 - Moving the file to the Bin directory:`$ sudo mv kubectl /usr/local/bin/`
 - Verifying that kubectl version 1.21.0 or higher is installed:`$ kubectl version --client`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/1.png)
+![](./img/project21/1.png)
 
 ## SIEP 2: Installing CFSSL And CFSSLJSON
 
@@ -28,7 +28,7 @@ $ wget -q --show-progress --https-only --timestamping \
 - Making it executable: `$ chmod +x cfssl cfssljson`
 - Moving the file to the bin directory:`$ sudo mv cfssl cfssljson /usr/local/bin/`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/2.png)
+![](./img/project21/2.png)
 
 ## STEP 3: Configuring The Network Infrastructure
 - Creating a directory named k8s-cluster-from-ground-up and changing directory: `$ mkdir k8s-cluster-from-ground-up && cd k8s-cluster-from-ground-up`
@@ -80,7 +80,7 @@ $ aws ec2 associate-dhcp-options \
   --dhcp-options-id ${DHCP_OPTION_SET_ID} \
   --vpc-id ${VPC_ID}
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/3.png)
+![](./img/project21/3.png)
 
 - Creating the Subnet: 
 ```
@@ -126,8 +126,8 @@ aws ec2 create-route \
   --destination-cidr-block 0.0.0.0/0 \
   --gateway-id ${INTERNET_GATEWAY_ID}
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/4.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/5.png)
+![](./img/project21/4.png)
+![](./img/project21/5.png)
 
 - Configuring Security Groups
 ```
@@ -173,11 +173,11 @@ aws ec2 authorize-security-group-ingress \
   --port -1 \
   --cidr 0.0.0.0/0
   ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/10.png)
+![](./img/project21/10.png)
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/6.png)
+![](./img/project21/6.png)
  
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/7.png)
+![](./img/project21/7.png)
 
 - Creating a network Load balancer:
 ```
@@ -219,7 +219,7 @@ KUBERNETES_PUBLIC_ADDRESS=$(aws elbv2 describe-load-balancers \
 --load-balancer-arns ${LOAD_BALANCER_ARN} \
 --output text --query 'LoadBalancers[].DNSName')
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/8.png)
+![](./img/project21/8.png)
 
 ## STEP 4: Creating Compute Resources
 
@@ -265,7 +265,7 @@ for i in 0 1 2; do
     --tags "Key=Name,Value=${NAME}-master-${i}"
 done
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/9.png)
+![](./img/project21/9.png)
 
 - Creating 3 worker nodes:
 ```
@@ -336,11 +336,11 @@ cfssl gencert -initca ca-csr.json | cfssljson -bare ca
 
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/11.png)
+![](./img/project21/11.png)
 
 - Provisioning Client/Server certificates for all the components that will communicate with the api-server by using the root CA to request more certificates which the different Kubernetes components, i.e. clients and server, will use to have encrypted communication.
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/12.png)
+![](./img/project21/12.png)
 
 - Generating the Certificate Signing Request (CSR), Private Key and the Certificate for the Kubernetes Master Nodes (api-server).
 ```
@@ -390,8 +390,8 @@ cfssl gencert \
   master-kubernetes-csr.json | cfssljson -bare master-kubernetes
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/13.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/14.png)
+![](./img/project21/13.png)
+![](./img/project21/14.png)
 
 - Generating Client Certificate and Private Key for **kube-scheduler**
 ```
@@ -425,8 +425,8 @@ cfssl gencert \
 
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/15.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/16.png)
+![](./img/project21/15.png)
+![](./img/project21/16.png)
 
 - Generating Client Certificate and Private Key for **kube-proxy**
 ```
@@ -460,8 +460,8 @@ cfssl gencert \
 
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/17.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/18.png)
+![](./img/project21/17.png)
+![](./img/project21/18.png)
 
 - Generating Client Certificate and Private Key for **kube-controller-manager**
 ```
@@ -494,7 +494,7 @@ cfssl gencert \
 
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/19.png)
+![](./img/project21/19.png)
 
 - Generating Client Certificate and Private Key for **kubelet**
 ```
@@ -537,8 +537,8 @@ EOF
     ${NAME}-worker-${i}-csr.json | cfssljson -bare ${NAME}-worker-${i}
 done
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/20.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/21.png)
+![](./img/project21/20.png)
+![](./img/project21/21.png)
 
 - Generating Client Certificate and Private Key for **kubernetes admin user**
 ```
@@ -570,7 +570,7 @@ cfssl gencert \
   admin-csr.json | cfssljson -bare admin
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/22.png)
+![](./img/project21/22.png)
 
 - Generating Client Certificate and Private Key for **Token Controller**
 
@@ -605,7 +605,7 @@ cfssl gencert \
   service-account-csr.json | cfssljson -bare service-account
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/23.png)
+![](./img/project21/23.png)
 
 ## STEP 6: Distributing The Client And Server Certificates
 - Sending all the client and server certificates to their respective instances. Starting from **worker nodes**
@@ -620,7 +620,7 @@ for i in 0 1 2; do
 done
 ```
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/24.png)
+![](./img/project21/24.png)
 
 - For the **master nodes**:
 ```
@@ -634,7 +634,7 @@ instance="${NAME}-master-${i}" \
     master-kubernetes.pem master-kubernetes-key.pem ubuntu@${external_ip}:~/;
 done
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/25.png)
+![](./img/project21/25.png)
 
 ## STEP 7: Using `KUBECTL` To Generate Kubernates Configuration Files For Authentication
 
@@ -669,7 +669,7 @@ instance_hostname="ip-172-31-0-2${i}"
   kubectl config use-context default --kubeconfig=${instance}.kubeconfig
 done
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/26.png)
+![](./img/project21/26.png)
 
 - ls -ltr *.kubeconfig
 - Generating the kube-proxy kubeconfig
@@ -695,7 +695,7 @@ done
   kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/27.png)
+![](./img/project21/27.png)
 
 - Generating the Kube-Controller-Manager kubeconfig:
 ```
@@ -720,7 +720,7 @@ done
   kubectl config use-context default --kubeconfig=kube-controller-manager.kubeconfig
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/28.png)
+![](./img/project21/28.png)
 
 - Generating the Kube-Scheduler Kubeconfig:
 ```
@@ -745,7 +745,7 @@ done
   kubectl config use-context default --kubeconfig=kube-scheduler.kubeconfig
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/29.png)
+![](./img/project21/29.png)
 
 - Generating the kubeconfig file for the admin user
 ```
@@ -770,17 +770,17 @@ done
   kubectl config use-context default --kubeconfig=admin.kubeconfig
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/30.png)
+![](./img/project21/30.png)
 
 - Distributing the files to thier respective servers using scp and for loop:
 
 **For Master nodes**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/31.png)
+![](./img/project21/31.png)
 
 **For Worker nodes**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/32.png)
+![](./img/project21/32.png)
 
 ## STEP 8: Preparing The ETCD Database For Encryption At Rest
  Kubernetes uses etcd (A distributed key value store) to store variety of data which includes the cluster state, application configurations, and secrets but since the data in it is stored as plain text, therefore the etcd is encrypted as follows,
@@ -801,11 +801,11 @@ resources:
       - identity: {}
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/33.png)
+![](./img/project21/33.png)
 
 - Sending the encryption-config.yaml file to the master nodes using scp and a for loop
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/34.png)
+![](./img/project21/34.png)
 
 - Bootstrapping etcd cluster using **tmux** to work with multiple terminal sessions simultaneously. Opening 3 panes and ssh into the 3 master nodes and setting the **synchronize-panes on**
 
@@ -833,9 +833,9 @@ master_3_ip=$(aws ec2 describe-instances \
 --output text --query 'Reservations[].Instances[].PublicIpAddress')
 ssh -i k8s-cluster-from-ground-up.id_rsa ubuntu@${master_3_ip}
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/35.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/36.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/37.png)
+![](./img/project21/35.png)
+![](./img/project21/36.png)
+![](./img/project21/37.png)
 
 - Downloading and installing **etcd**
 ```
@@ -849,7 +849,7 @@ tar -xvf etcd-v3.4.15-linux-amd64.tar.gz
 sudo mv etcd-v3.4.15-linux-amd64/etcd* /usr/local/bin/
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/38.png)
+![](./img/project21/38.png)
 
 - Configuring the etcd server
 ```
@@ -859,7 +859,7 @@ sudo mv etcd-v3.4.15-linux-amd64/etcd* /usr/local/bin/
   sudo cp ca.pem master-kubernetes-key.pem master-kubernetes.pem /etc/etcd/
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/40.png)
+![](./img/project21/40.png)
 
 - The instance internal IP address will be used to serve client requests and communicate with etcd cluster peers. Retrieving the internal IP address for the current compute instance:
 ```
@@ -872,7 +872,7 @@ ETCD_NAME=$(curl -s http://169.254.169.254/latest/user-data/ \
 
 echo ${ETCD_NAME}
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/41.png)
+![](./img/project21/41.png)
 
 - Creating the **etcd.service** systemd unit file:
 ```
@@ -908,7 +908,7 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/42.png)
+![](./img/project21/42.png)
 
 - Starting and enabling the etcd Server
 ```
@@ -918,7 +918,7 @@ sudo systemctl enable etcd
 sudo systemctl start etcd
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/43.png)
+![](./img/project21/43.png)
 
 - Verifying the etcd installation
 ```
@@ -928,10 +928,10 @@ sudo ETCDCTL_API=3 etcdctl member list \
   --cert=/etc/etcd/master-kubernetes.pem \
   --key=/etc/etcd/master-kubernetes-key.pem
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/44.png)
+![](./img/project21/44.png)
 
 - Checking the etcd service status:`$ systemctl status etcd`
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/45.png)
+![](./img/project21/45.png)
 
 ## STEP 9: Configuring The Components For The Control Plane On The Master/Controller Nodes
 
@@ -944,7 +944,7 @@ wget -q --show-progress --https-only --timestamping \
 "https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kube-scheduler" \
 "https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubectl"
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/46.png)
+![](./img/project21/46.png)
 
 - Installing the Kubernetes binaries:
 ```
@@ -963,7 +963,7 @@ service-account-key.pem service-account.pem \
 encryption-config.yaml /var/lib/kubernetes/
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/47.png)
+![](./img/project21/47.png)
 
 - The instance internal IP address will be used to advertise the API Server to members of the cluster. Retrieving the internal IP address for the current compute instance:`$ export INTERNAL_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)`
 - Creating the kube-apiserver.service systemd unit file:
@@ -1011,7 +1011,7 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/48.png)
+![](./img/project21/48.png)
 
 - Moving the kube-controller-manager kubeconfig into place:`$ sudo mv kube-controller-manager.kubeconfig /var/lib/kubernetes/`
 - Exporting some variables to retrieve the vpc_cidr which will be required for the bind-address flag:
@@ -1021,7 +1021,7 @@ export EC2_MAC_ADDRESS=$(curl -s $AWS_METADATA/network/interfaces/macs/ | head -
 export VPC_CIDR=$(curl -s $AWS_METADATA/network/interfaces/macs/$EC2_MAC_ADDRESS/vpc-ipv4-cidr-block/)
 export NAME=k8s-cluster-from-ground-up
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/49.png)
+![](./img/project21/49.png)
 
 - Creating the kube-controller-manager.service systemd unit file:
 ```
@@ -1053,7 +1053,7 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/50.png)
+![](./img/project21/50.png)
 
 - Moving the kube-scheduler kubeconfig into place:
 ```
@@ -1071,7 +1071,7 @@ leaderElection:
   leaderElect: true
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/51.png)
+![](./img/project21/51.png)
 
 - Creating the kube-scheduler.service systemd unit file:
 ```
@@ -1091,7 +1091,7 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/52.png)
+![](./img/project21/52.png)
 
 - Starting the Controller Services
 ```
@@ -1101,7 +1101,7 @@ sudo systemctl enable kube-apiserver kube-controller-manager kube-scheduler
 sudo systemctl start kube-apiserver kube-controller-manager kube-scheduler
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/53.png)
+![](./img/project21/53.png)
 
 - Checking the status of the services
 ```
@@ -1111,21 +1111,21 @@ sudo systemctl status kube-controller-manager
 sudo systemctl status kube-scheduler
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/54.png)
+![](./img/project21/54.png)
 
 ## STEP 10: Testing that Everything is working fine
 - To get the cluster details run:`$ kubectl cluster-info  --kubeconfig admin.kubeconfig`
 - To get the current namespaces:`$ kubectl get namespaces --kubeconfig admin.kubeconfig`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/55.png)
+![](./img/project21/55.png)
 
 - To reach the Kubernetes API Server publicly:`$ curl --cacert /var/lib/kubernetes/ca.pem https://$INTERNAL_IP:6443/version`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/56.png)
+![](./img/project21/56.png)
 
 - To get the status of each component:`$ kubectl get componentstatuses --kubeconfig admin.kubeconfig`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/57.png)
+![](./img/project21/57.png)
 
 ## STEP 11: Configuring Role Based Access Control
 - Configuring Role Based Access Control (RBAC) on one of the controller(master) nodes so that the api-server has necessary authorization for for the kubelet.
@@ -1154,7 +1154,7 @@ rules:
       - "*"
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/58.png)
+![](./img/project21/58.png)
 
 - Creating the **ClusterRoleBinding** to bind the kubernetes user with the role created above
 ```
@@ -1174,7 +1174,7 @@ subjects:
     name: kubernetes
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/59.png)
+![](./img/project21/59.png)
 
 - The **RBAC** permissions is configured to allow the Kubernetes API Server to access the Kubelet API on each worker nodes. Creating the system:kube-apiserver-to-kubelet ClusterRole with permissions to access the Kubelet API and perform most common tasks associated with managing pods on the worker nodes:
 ```
@@ -1200,7 +1200,7 @@ rules:
       - "*"
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/60.png)
+![](./img/project21/60.png)
 
 - Binding the system:kube-apiserver-to-kubelet ClusterRole to the kubernetes user so that API server can authenticate successfully to the kubelets on the worker nodes:
 ```
@@ -1220,7 +1220,7 @@ subjects:
     name: kubernetes
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/61.png)
+![](./img/project21/61.png)
 
 ## STEP 12: Bootstraping components on the worker nodes
 
@@ -1247,7 +1247,7 @@ worker_3_ip=$(aws ec2 describe-instances \
 --output text --query 'Reservations[].Instances[].PublicIpAddress')
 ssh -i k8s-cluster-from-ground-up.id_rsa ubuntu@${worker_3_ip}
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/62.png)
+![](./img/project21/62.png)
 
 - Installing OS dependencies:
 ```
@@ -1256,7 +1256,7 @@ ssh -i k8s-cluster-from-ground-up.id_rsa ubuntu@${worker_3_ip}
   sudo apt-get -y install socat conntrack ipset
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/63.png)
+![](./img/project21/63.png)
 
 - Disabling Swap:`$ sudo swapoff -a`
 - Downloading and installing binaries of runc, cri-ctl and container runtime (Containerd)
@@ -1265,7 +1265,7 @@ ssh -i k8s-cluster-from-ground-up.id_rsa ubuntu@${worker_3_ip}
   https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.21.0/crictl-v1.21.0-linux-amd64.tar.gz \
   https://github.com/containerd/containerd/releases/download/v1.4.4/containerd-1.4.4-linux-amd64.tar.gz 
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/64.png)
+![](./img/project21/64.png)
 
 - Configuring the containerd
 ```
@@ -1281,7 +1281,7 @@ ssh -i k8s-cluster-from-ground-up.id_rsa ubuntu@${worker_3_ip}
 ```
 - Creating containerd directory:`$ sudo mkdir -p /etc/containerd/`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/65.png)
+![](./img/project21/65.png)
 
 - Inserting the following in it
 ```
@@ -1295,7 +1295,7 @@ cat << EOF | sudo tee /etc/containerd/config.toml
       runtime_root = ""
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/66.png)
+![](./img/project21/66.png)
 
 - Creating the containerd.service systemd unit file:
 ```
@@ -1321,7 +1321,7 @@ LimitCORE=infinity
 WantedBy=multi-user.target
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/67.png)
+![](./img/project21/67.png)
 
 - Creating directories to configure kubelet, kube-proxy, cni, and a directory to keep the kubernetes root ca file:
 ```
@@ -1338,7 +1338,7 @@ sudo mkdir -p \
 wget -q --show-progress --https-only --timestamping \
   https://github.com/containernetworking/plugins/releases/download/v0.9.1/cni-plugins-linux-amd64-v0.9.1.tgz
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/68.png)
+![](./img/project21/68.png)
 
 - Installing CNI into **/opt/cni/bin/**:`$ sudo tar -xvf cni-plugins-linux-amd64-v0.9.1.tgz -C /opt/cni/bin/`
 - Downloading binaries for **kubectl, kube-proxy, and kubelet**
@@ -1355,7 +1355,7 @@ wget -q --show-progress --https-only --timestamping \
   sudo mv  kubectl kube-proxy kubelet /usr/local/bin/
 }
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/69.png)
+![](./img/project21/69.png)
 
 ## STEP 13: Configuring The Worker Nodes Components
 
@@ -1386,7 +1386,7 @@ cat > 172-20-bridge.conf <<EOF
 }
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/70.png)
+![](./img/project21/70.png)
 
 - Configuring the loopback network:
 ```
@@ -1405,7 +1405,7 @@ WORKER_NAME=${NAME}-$(curl -s http://169.254.169.254/latest/user-data/ \
   | tr "|" "\n" | grep "^name" | cut -d"=" -f2)
 echo "${WORKER_NAME}"
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/71.png)
+![](./img/project21/71.png)
 
 - Moving the certificates and kubeconfig file to their respective configuration directories:
 ```
@@ -1423,7 +1423,7 @@ WORKER_NAME=${NAME}-$(curl -s http://169.254.169.254/latest/user-data/ \
   | tr "|" "\n" | grep "^name" | cut -d"=" -f2)
 echo "${WORKER_NAME}"
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/72.png)
+![](./img/project21/72.png)
 
 Creating the kubelet-config.yaml file
 
@@ -1449,7 +1449,7 @@ tlsCertFile: "/var/lib/kubelet/${WORKER_NAME}.pem"
 tlsPrivateKeyFile: "/var/lib/kubelet/${WORKER_NAME}-key.pem"
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/74.png)
+![](./img/project21/74.png)
 
 - Configuring the kubelet systemd service:
 ```
@@ -1476,7 +1476,7 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/75.png)
+![](./img/project21/75.png)
 
 - Creating the kube-proxy.yaml file:
 ```
@@ -1489,7 +1489,7 @@ mode: "iptables"
 clusterCIDR: "172.31.0.0/16"
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/76.png)
+![](./img/project21/76.png)
 
 - Configuring the Kube Proxy systemd service:
 ```
@@ -1506,7 +1506,7 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/77.png)
+![](./img/project21/77.png)
 
 - Reloading configurations and starting both services:
 ```
@@ -1518,4 +1518,4 @@ EOF
 ```
 - Checking the readiness of the worker nodes on all master nodes:`$ kubectl get nodes --kubeconfig admin.kubeconfig -o wide`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project21/Nodes%20ready.png)
+![](./img/project21/Nodes%20ready.png)

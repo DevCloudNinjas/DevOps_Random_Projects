@@ -1,6 +1,6 @@
 # SETTING UP A LEMP STACK WEB SERVER ON AWS CLOUD
 
-A LEMP stack is a set of tools used to deploying a web application. Similar to the LAMP stack project covered in the [project1](https://github.com/somex6/Darey.io-Projects/blob/main/project1.md) of my repo but with an alternative Web Server called **NGINX**, which is also very popular and widely used by many websites in the Internet.
+A LEMP stack is a set of tools used to deploying a web application. Similar to the LAMP stack project covered in the [project1](./project1.md) of my repo but with an alternative Web Server called **NGINX**, which is also very popular and widely used by many websites in the Internet.
 The following are the steps I took to setting up a LEMP stack:
 
 ## STEP 1: Launching an EC2 Instance
@@ -8,7 +8,7 @@ The following are the steps I took to setting up a LEMP stack:
 -	 I created a new EC2 Instance of t2.nano family with Ubuntu Server 20.04 LTS (HVM) image from my aws account. After a successful launch of the EC2 instance(ubuntu server), I connected to the EC2 instance from my Git bash (as a windows user) terminal with my private key(.pem file) by entering these command in the terminal:
 	`ssh -i <Your-private-key.pem> ubuntu@<EC2-Public-IP-address>`
 **which will look like this:**
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/connection%20to%20ec2.png)
+![](./img/project2-img/connection%20to%20ec2.png)
 
 ## Step 2: Installing the Nginx Web Server
 
@@ -16,26 +16,26 @@ In order to display web pages to the site visitors, Nginx has to be employed- a 
 After a successful connection to the EC2 machine, entering the following command:
 -	Updating the server’s package: `$ sudo apt update`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/sudo%20apt%20update.png)
+![](./img/project2-img/sudo%20apt%20update.png)
 
 -	Installing Nginx: `$ sudo apt install nginx`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/Installing%20Nginx.png)
+![](./img/project2-img/Installing%20Nginx.png)
 
 -	To verify that nginx was successfully installed and is running as a service in Ubuntu: `$ sudo systemctl status nginx`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/Nginx%20running%20perfectly.png)
+![](./img/project2-img/Nginx%20running%20perfectly.png)
 
 -	Configuring the EC2 machine to be able to receive traffic by the web server, by adding an inbound rule to the security group of the EC2 machine to listen to port 80.
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/adding%20http%20rule.png)
+![](./img/project2-img/adding%20http%20rule.png)
 
 -	To access the server locally from Git bash terminal: `$ curl http://localhost:80 Or $ curl http://127.0.0.1:80`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/testing%20ngnix%20on%20local%20host.png)
+![](./img/project2-img/testing%20ngnix%20on%20local%20host.png)
 
 -	To test how our Nginx server can respond to requests from the Internet is by entering my public IP address `http://<Public-IP-Address>:80` on a web browser which will look like this: 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/Nginx%20working%20on%20browser.png)
+![](./img/project2-img/Nginx%20working%20on%20browser.png)
 
 **This shows that the web server is now correctly installed and accessible through my firewall**
 
@@ -44,23 +44,23 @@ After a successful connection to the EC2 machine, entering the following command
 Now that the server is running,  next is installing MySQL for storing and managing data for the site in a relational database.
 -	Installing MySQL: `$ sudo apt install mysql-server`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/Installing%20mysql%20server.png)
+![](./img/project2-img/Installing%20mysql%20server.png)
 
 - After a successful installation,  it’s recommended that one runs a security script that comes pre-installed with MySQL which removes insecure default settings and lock down access to my database system. The following command is entered;	`$ sudo mysql_secure_installation`
 - Next is accepting to configure the VALIDATE PASSWORD PLUGIN when prompted, and selecting any of the three levels of the password validation policy and then typing a new password that corresponds to the level of password validation policy selected.
 - And finally typing Y and hitting Enter key at the subsequent prompt that follow after which will remove some anonymous users and the test database, disable remote root logins, and load these new rules so that MySQL immediately respects the changes I have made.
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/mysql%20secure%20installation.png)
+![](./img/project2-img/mysql%20secure%20installation.png)
 
 -	Testing if I am able to log into MySQL console: `$ sudo mysql` 
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/mysql.png)
+![](./img/project2-img/mysql.png)
 
 ## Step 4: Installing PHP
 Next is to install PHP to process code and generate dynamic content for the web server and a PHP module called php-mysql that allows PHP to communicate with MySQL-based databases:
 -	Installing the both at once: `$ sudo apt install php-fpm php-mysql`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/installing%20php.png)
+![](./img/project2-img/installing%20php.png)
 
 ## Step 5 — Configuring Nginx to Use PHP Processor
 
@@ -102,11 +102,11 @@ server {
 -	Creating an index.html file in the root web directory inorder to test that the new server block works as expected:
 `sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/some%20commands.png)
+![](./img/project2-img/some%20commands.png)
 
 -	Testing  the website URL using my IP address: `http://<Public-IP-Address>:80`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/index.html%20file%20working%20on%20browser.png)
+![](./img/project2-img/index.html%20file%20working%20on%20browser.png)
 
 ## Step 6 – Testing PHP with Nginx
 
@@ -119,7 +119,7 @@ phpinfo();
 ```
 -	To access this page in the web browser: `http://Public_IP_address/info.php`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/php%20working%20on%20browser.png)
+![](./img/project2-img/php%20working%20on%20browser.png)
 
 -	Removing the file since it contain seneitive information about my PHP environment: `$ sudo rm /var/www/your_domain/info.php`
 
@@ -133,13 +133,13 @@ Next is creating a simple ‘To do list’ to test how data is retrieved from th
   `mysql> GRANT ALL ON example_database.* TO 'example_user'@'%';`
 -	Exiting from MySQL console: `mysql> exit`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/creating%20mysql%20user.png)
+![](./img/project2-img/creating%20mysql%20user.png)
 
 -	Testing if the new user has the proper permissions by logging in to the MySQL console again using the custom user credentials: `$ mysql -u example_user -p`
 -	To see the database created: `mysql> SHOW DATABASES;`
 -	`mysql> SHOW DATABASES;`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/creating%20database.png)
+![](./img/project2-img/creating%20database.png)
 
 -	 creating a test table named todo_list:
   ```
@@ -177,5 +177,5 @@ try {
 -	To access this page in my web browser is by visiting my public IP address followed by /todo_list.php
 `http://<Public_domain_or_IP>/todo_list.php`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project2-img/Todo%20list%20working%20on%20browser.png)
+![](./img/project2-img/Todo%20list%20working%20on%20browser.png)
 

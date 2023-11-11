@@ -9,7 +9,7 @@ The following outlines the steps;
 
 - Creating AWS S3 bucket from a CLI to store the Terraform state:`$ aws s3api create-bucket --bucket eks-terraform-buck --region us-east-1`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/11-creating%20s3%20bucket.png)
+![](./img/project24/11-creating%20s3%20bucket.png)
 
 - Creating a new directory **eks** for the Terraform file
 - Creating a file **backend.tf** for the remote state in S3:
@@ -266,16 +266,16 @@ provider "random" {
 ```
 - Running the **terraform init** command:
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/12-terraform%20init.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/12-terraform%20init-2.png)
+![](./img/project24/12-terraform%20init.png)
+![](./img/project24/12-terraform%20init-2.png)
 
 - Running the **terraform plan** command to confirm the configuration:
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/13-terraform%20validate%20and%20plan.png)
+![](./img/project24/13-terraform%20validate%20and%20plan.png)
 
 - Running the **terraform apply** command will cause the following the error at some point while creating the resources, that is because for us to connect to the cluster using the kubeconfig, Terraform needs to be able to connect and set the credentials correctly:
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/14-fixing%20error.png)
+![](./img/project24/14-fixing%20error.png)
 
 - To fixed the error the following configuration is added in the **data.tf** and **provider.tf** file:
 
@@ -301,7 +301,7 @@ provider "kubernetes" {
 ```
 - Running the **terraform init** and **terraform apply** again
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/14-error%20fixed.png)
+![](./img/project24/14-error%20fixed.png)
 
 - Creating the **kubeconfig** file using awscli:`$ aws eks update-kubecofig --name tooling-app-eks --region us-west-1 --kubeconfig kubeconfig`
 
@@ -311,65 +311,67 @@ provider "kubernetes" {
 - Changing the permission of the script:`$ chmod 700 get_helm.sh`
 - Executing the script:`$ ./get_helm.sh`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/16-installing%20helm.png)
+![](./img/project24/16-installing%20helm.png)
 
 ## STEP 3: Deploying Jenkins With Helm
 
 - Adding the Jenkins' repository to helm so it can be easily downloaded and deployed:`$ helm repo add jenkins https://charts.jenkins.io`
 - Updating helm repo:`$ helm repo update`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/17-installing%20jenkins%20with%20helm.png)
+![](./img/project24/17-installing%20jenkins%20with%20helm.png)
 
 - Installing the chart:`$ helm install myjenkins jenkins/jenkins --kubeconfig kubeconfig`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/17-installing%20jenkins%20with%20helm-2.png)
+![](./img/project24/17-installing%20jenkins%20with%20helm-2.png)
 
 - Running some commands to inspect the installation:
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/18-running%20some%20commands.png)
+![](./img/project24/18-running%20some%20commands.png)
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/19-more%20commands.png)
+![](./img/project24/19-more%20commands.png)
 
 - In order to run the **kubectl** commands without specifying the **kubeconfig** file, a package manager for kubectl called **krew** is installed so that it will enable us to install plugins to extend the functionality of kubectl:
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/20-installing%20krew.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/20-installing%20krew-2.png)
+![](./img/project24/20-installing%20krew.png)
+![](./img/project24/20-installing%20krew-2.png)
 
 - Installing **Konfig** plugin:`$ kubectl krew install konfig`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/21-installing%20konfig.png)
+![](./img/project24/21-installing%20konfig.png)
 
 - Importing the kubeconfig into the default kubeconfig file:`$ sudo kubectl konfig import --save  kubeconfig`
 - To show all the contexts for the clusters configured in my kubeconfig.`$ kubectl config get-contexts`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/22-use%20context.png)
+![](./img/project24/22-use%20context.png)
 
 - Setting the current context to use the one of **tooling-app-eks** for all kubectl and helm commands:`$ kubectl config use-context tooling-app-eks`
 - Testing it:`$ kubectl get po`
 - To display the current context in use:`$ kubectl config current-context`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/23-testing%20it%20out.png)
+![](./img/project24/23-testing%20it%20out.png)
 
 - To acquire the Jenkins administrator's password credential:`$ kubectl exec --namespace default -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/chart-admin-password && echo`
 - Port forwarding to access Jenkins from the UI:`$ kubectl --namespace default port-forward svc/myjenkins 8080:8080`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/24-getting%20the%20admin%20password%20and%20port%20forwarding.png)
+![](./img/project24/24-getting%20the%20admin%20password%20and%20port%20forwarding.png)
 
 - Accessing the Jenkins app from the browser:`http://localhost:8080`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/25-testing%20on%20the%20browser.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/26-logging%20into%20jenkins.png)
+![](./img/project24/25-testing%20on%20the%20browser.png)
+![](./img/project24/26-logging%20into%20jenkins.png)
 
 ## STEP 4: Deploying Artifactory With Helm
 
 - Adding the Artifactory's repository to helm:`$ helm repo add jfrog https://charts.jfrog.io `
 - Updating helm repo:`$ helm repo update`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/25-adding%20jfrog%20repo%20and%20update.png)
+![](./img/project24/25-adding%20jfrog%20repo%20and%20update.png)
 
 - Installing the chart:`$ helm upgrade --install artifactory --namespace artifactory jfrog/artifactory`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/26-installing%20jfrog.png)
+![](./img/project24/26-installing%20jfrog.png)
+
+![](./img/project24/26-installing%20jfrog.png)
 
 ## STEP 5: Deploying Hashicorp Vault With Helm
 
@@ -377,55 +379,55 @@ provider "kubernetes" {
 - Updating helm repo:`$ helm repo update`
 - Installing the chart:`$ helm install vault hashicorp/vault`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/28-installing%20hashicorp%20vault.png)
+![](./img/project24/28-installing%20hashicorp%20vault.png)
 
 - Inspecting the installation:
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/29-helm%20pods%20and%20svc.png)
+![](./img/project24/29-helm%20pods%20and%20svc.png)
 
 - Port forwarding to access Hashicorp vault from the UI:`kubectl port-forward svc/vault 8089:8200`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/30-port-forwarding%20the%20vault%20svc.png)
+![](./img/project24/30-port-forwarding%20the%20vault%20svc.png)
 
 - Accessing the app from the browser:`http://localhost:8089`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/30-result.png)
+![](./img/project24/30-result.png)
 
 ## STEP 6: Deploying Prometheus With Helm
 
 - Adding the prometheus's repository to helm:`$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
 - Updating helm repo:`$ helm repo update`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/31-adding%20prometheus%20repo.png)
+![](./img/project24/31-adding%20prometheus%20repo.png)
 
 - Installing the chart:`$ helm install myprometheus prometheus-community/prometheus`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/31-installing%20prometheus.png)
+![](./img/project24/31-installing%20prometheus.png)
 
 - Inspecting the installation shows that there are various pods and services created
 - Port forwarding to access prometheus for alert manager from the UI:`$ kubectl port-forward svc/myprometheus-alertmanager 8000:80`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/32-port%20forwarding%20on%20alert%20manager.png)
+![](./img/project24/32-port%20forwarding%20on%20alert%20manager.png)
 
 - Accessing the app from the browser:`http://localhost:8000`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/32-alert%20manager.png)
+![](./img/project24/32-alert%20manager.png)
 
 - Port forwarding to access prometheus for kube state metrics from the UI:`$ kubectl port-forward svc/myprometheus-kube-state-metrics 8000:8080`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/33-port-forwarding%20on%20kube%20metrics.png)
+![](./img/project24/33-port-forwarding%20on%20kube%20metrics.png)
 
 - Accessing the app from the browser:`http://localhost:8000`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/33-kube-state%20metrics.png)
+![](./img/project24/33-kube-state%20metrics.png)
 
 - Port forwarding to access prometheus for pushgateway from the UI:`$ kubectl port-forward svc/myprometheus-pushgateway 8000:9091`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/35-port%20forward%20push%20gateway.png)
+![](./img/project24/35-port%20forward%20push%20gateway.png)
 
 - Accessing the app from the browser:`http://localhost:8000`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/35-push%20gateway.png)
+![](./img/project24/35-push%20gateway.png)
 
 ## STEP 6: Deploying Grafana With Helm
 
@@ -433,17 +435,17 @@ provider "kubernetes" {
 - Updating helm repo:`$ helm repo update`
 - Installing the chart:`$ helm install grafana-tool grafana/grafana`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/36-installing%20grafana.png)
+![](./img/project24/36-installing%20grafana.png)
 
 - Port forwarding to access grafana from the UI:`$ kubectl port-forward svc/grafana-tool 8000:80`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/37-port%20forward%20grafana%20svc.png)
+![](./img/project24/37-port%20forward%20grafana%20svc.png)
 
 - Accessing the app from the browser:`http://localhost:8000`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/38-grafana.png)
+![](./img/project24/38-grafana.png)
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/38-grafana-2.png)
+![](./img/project24/38-grafana-2.png)
 
 ## STEP 6: Deploying Elasticsearch With Helm
 
@@ -451,4 +453,4 @@ provider "kubernetes" {
 - Updating helm repo:`$ helm repo update`
 - Installing the chart:`$ helm install ...`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project24/39-installing%20elasticsearch.png)
+![](./img/project24/39-installing%20elasticsearch.png)

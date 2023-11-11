@@ -9,7 +9,7 @@ This project demonstrates how containerised applications are deployed as pods in
 
 **nginx-pod.yaml manifest file**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/13-creating%20nginx-pod%20file.png)
+![](./img/project22/13-creating%20nginx-pod%20file.png)
 
 - Running the following commands to inspect the setup:
 ```
@@ -17,7 +17,7 @@ $ kubectl get pod nginx-pod --show-labels
 
 $ kubectl get pod nginx-pod -o wide
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/14-applying%20the%20config.png)
+![](./img/project22/14-applying%20the%20config.png)
 
 ## STEP 2: Accessing The Nginx Application Through A Browser
 
@@ -25,7 +25,7 @@ $ kubectl get pod nginx-pod -o wide
 - Running the **kubectl** command to run the container that has curl software in it as a pod:`$ kubectl run curl --image=dareyregistry/curl -i --tty`
 - Running **curl** command and pointing it to the IP address of the Nginx Pod:`$ curl -v 172.50.202.214:80`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/15-connecting%20to%20nginx%20pod%20from%20another%20pod.png)
+![](./img/project22/15-connecting%20to%20nginx%20pod%20from%20another%20pod.png)
 
 - Now Let's try and access the application through the browser, but first we need to create a service for the Nginx pod.
 - Creating service for the nginx pod by applying the manifest file:`$ kubectl apply -f nginx-service.yaml`
@@ -53,15 +53,15 @@ $ kubectl get service nginx-service -o wide
 $ kubectl get svc nginx-service --show-labels
 ```
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/16-creating%20nginx%20service.png)
+![](./img/project22/16-creating%20nginx%20service.png)
 
 - Since the type of service created for the Nginx pod is a ClusterIP which cannot be accessed externally, we can do port-forwarding in order to bind the machine's port to the ClusterIP service port, i.e, tunnelling traffic through the machine's port number to the port number of the nginx-service: `$ kubectl port-forward svc/nginx-service 8089:80`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/17-port-forwading%20to%20nginx%20service.png)
+![](./img/project22/17-port-forwading%20to%20nginx%20service.png)
 
 - Accessing the Nginx application from the browser:`http://localhost:8089`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/18-accessing%20nginx%20from%20browser.png)
+![](./img/project22/18-accessing%20nginx%20from%20browser.png)
 
 - Another way of accessing the Nginx app through browser is the use of **NodePort** which is a type of service that exposes the service on a static port on the node’s IP address and they range from **30000-32767** by default.
 - Editing the nginx-service.yml manifest file to expose the Nginx service in order to be accessible to the browser by adding **NodePort** as a type of service:
@@ -81,11 +81,11 @@ spec:
       nodePort: 30080
 ```
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/19-creating%20nodeport%20service.png)
+![](./img/project22/19-creating%20nodeport%20service.png)
 
 - Accessing the nginx application from the browser with the value of the nodeport **30080** which is a port on the node in which the Pod is scheduled to run:`http://3.82.220.4:30080`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/20-accessing%20on%20browser.png) 
+![](./img/project22/20-accessing%20on%20browser.png) 
 
 ## STEP 3: Creating A Replica Set
 - The replicaSet object helps to maintain a stable set of Pod replicas running at any given time to achieve availability in case one or two pods dies.
@@ -125,12 +125,12 @@ $ kubectl get rs -o wide
 
 **Another pod scheduled**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/21-creating%20rs.png)
+![](./img/project22/21-creating%20rs.png)
 
 - Two ways pods can be scaled: **Imperative** and **Declarative**
 - Imperative method is by running a command on the CLI: `$ kubectl scale --replicas 5 replicaset nginx-rs`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/22-imperative%20command.png)
+![](./img/project22/22-imperative%20command.png)
 
 - Declarative method is done by editing the **rs.yaml** manifest and changing to the desired number of replicas and applying the update
 
@@ -171,11 +171,11 @@ $ kubectl get deploy
 
 $ kubectl get rs
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/23-creating%20deployment.png)
+![](./img/project22/23-creating%20deployment.png)
 
 - To exec into one of the pods:`kubectl exec nginx-deployment-6fdcffd8fc-x57f9 -i -t -- bash`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/24-exec%20into%20a%20pod.png)
+![](./img/project22/24-exec%20into%20a%20pod.png)
 
 ## STEP 5: Deploying Tooling Application With Kubernetes
 
@@ -202,7 +202,7 @@ spec:
     spec:
       containers:
       - name: tooling
-        image: somex6/tooling:0.0.1
+        image: apotitech/tooling:0.0.1
         ports:
         - containerPort: 80
 ```
@@ -270,10 +270,10 @@ spec:
  ```
 - Accessing the application from the browser by port forwarding the service:
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/executing%20tooling%20app.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/executing%20tooling%20app-2.png)
+![](./img/project22/executing%20tooling%20app.png)
+![](./img/project22/executing%20tooling%20app-2.png)
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/tooling%20site.png)
+![](./img/project22/tooling%20site.png)
 
 ## STEP 6: Using AWS Load Balancer To Access The Nginx Application
 
@@ -295,10 +295,10 @@ spec:
       targetPort: 80 
 ```
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/26-lb%20created.png)
+![](./img/project22/26-lb%20created.png)
 
 - Inspecting the setup:`$ kubectl get service nginx-service -o yaml`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/25-creating%20lb%20service.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project22/25-creating%20lb%20service-2.png)
+![](./img/project22/25-creating%20lb%20service.png)
+![](./img/project22/25-creating%20lb%20service-2.png)
 

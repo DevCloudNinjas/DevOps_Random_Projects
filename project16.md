@@ -1,6 +1,6 @@
 # AUTOMATING INFRASTRUCTURE WITH IAC USING TERRAFORM PART 1
 ## INTRODUCTION
-This project demonstrates how the AWS infrastructure for 2 websites that was built manually in [project 15](https://github.com/somex6/Darey.io-Projects/blob/main/project15.md) is automated with the use of **Terraform**.
+This project demonstrates how the AWS infrastructure for 2 websites that was built manually in [project 15](./project15.md) is automated with the use of **Terraform**.
 
 The following outlines the steps taken:
 
@@ -8,7 +8,7 @@ The following outlines the steps taken:
  After creating an IAM user with AdministrativeAccess permissions in AWS and acquiring the access key and secret access key, the following step was taken:
 - Creating S3 bucket in AWS for storing Terraform state file and naming it **somex-terraform-bucket**.
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project16/10-creating%20the%20bucket.png)
+![](./img/project16/10-creating%20the%20bucket.png)
 
 - Running the following command on my terminal to install **boto3** including the AWS Common Runtime (CRT) which boto3 uses to incorporate features not otherwise available in the AWS SDK for python: `pip install boto3[crt]`
 - Downloading and running the AWS CLI MSI installer for Windows from the terminal: `C:\> msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi`
@@ -20,7 +20,7 @@ The following outlines the steps taken:
   for bucket in s3.buckets.all():
       print(bucket.name)
 ```
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project16/11-testing%20aws%20cli.png)
+![](./img/project16/11-testing%20aws%20cli.png)
 
 - Installing [Terraform](www.terraform.io)
 
@@ -44,22 +44,22 @@ resource "aws_vpc" "main" {
 ```
 - Running the following command which downloads the necessary plugins for Terraform to work: `terraform init`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project16/13-terraform%20init.png)
+![](./img/project16/13-terraform%20init.png)
 
 - Inorder to check to see what terraform intends to create before we tell it to go ahead and create the aws_vpc resource the following command is run: `terraform plan`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project16/14-terraform%20plan.png)
+![](./img/project16/14-terraform%20plan.png)
 
 - Then executing the plan: `terraform apply`
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project16/15-terraform%20apply.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project16/15-terraform%20apply-2.png)
+![](./img/project16/15-terraform%20apply.png)
+![](./img/project16/15-terraform%20apply-2.png)
 
 - A new file **terraform.tfstate** is created as a result of the above command which Terraform uses to keeps itself up to date with the exact state of the infrastructure and **terraform.tfstate.lock.info** file which Terraform uses to track who is running its code against the infrastructure at any point in time
 
 **pbl folder structure**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project16/16-files%20created.png)
+![](./img/project16/16-files%20created.png)
 
 ## STEP 2: Creating Subnet Resources
 - According to the architectural design 6 subnets is required:
@@ -217,17 +217,17 @@ preferred_number_of_public_subnets = 2
 ```
 **main.tf file**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project16/main.tf.png)
+![](./img/project16/main.tf.png)
 
 **variables.tf**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project16/variables.tf.png)
+![](./img/project16/variables.tf.png)
 
 **terraform.tfvars**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project16/terraform.tfvars.png)
+![](./img/project16/terraform.tfvars.png)
 
 ## STEP 5: Executing Terraform Apply
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project16/terraform%20apply.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project16/terraform%20apply-2.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project16/terraform%20apply-3.png)
+![](./img/project16/terraform%20apply.png)
+![](./img/project16/terraform%20apply-2.png)
+![](./img/project16/terraform%20apply-3.png)

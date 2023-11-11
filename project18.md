@@ -1,6 +1,6 @@
 # AUTOMATING INFRASTRUCTURE WITH IAC USING TERRAFORM PART 3 – REFACTORING
 ## INTRODUCTION
-In continuation to [Project 17](https://github.com/somex6/Darey.io-Projects/blob/main/project17.md), the entire code is refactored inorder to simplify the code using a Terraform tool called **Module**.
+In continuation to [Project 17](./project17.md), the entire code is refactored inorder to simplify the code using a Terraform tool called **Module**.
 
 The following outlines detailed step taken to achieve this:
 
@@ -41,12 +41,12 @@ resource "aws_dynamodb_table" "terraform_locks" {
 ```
 - Since Terraform expects that both S3 bucket and DynamoDB resources are already created before configuring the backend, executing terraform apply command:
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/terraform%20init.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/first%20terraform%20apply.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/first%20terraform%20apply-2.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/first%20terraform%20apply-3.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/dynamodb.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/terraform.tfstate%20created.png)
+![](./img/project18/terraform%20init.png)
+![](./img/project18/first%20terraform%20apply.png)
+![](./img/project18/first%20terraform%20apply-2.png)
+![](./img/project18/first%20terraform%20apply-3.png)
+![](./img/project18/dynamodb.png)
+![](./img/project18/terraform.tfstate%20created.png)
 
 - Entering the following code to configure the backend:
 ```
@@ -68,67 +68,67 @@ terraform {
 
 **pbl folder structure**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/structure%20of%20pbl%20folder.png)
+![](./img/project18/structure%20of%20pbl%20folder.png)
 
 - Refactoring the code for **VPC** folder:
 
 **outputs.tf**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/output%20for%20vpc.png)
+![](./img/project18/output%20for%20vpc.png)
 
 - Refactoring the code for **ALB** folder:
 
 **variables.tf**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/variables%20for%20ALB.png)
+![](./img/project18/variables%20for%20ALB.png)
 
 **outputs.tf**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/output%20for%20ALB.png)
+![](./img/project18/output%20for%20ALB.png)
 
 - Refactoring the code for **Autoscaling** folder:
 
 **variables.tf**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/variables%20for%20asg.png)
+![](./img/project18/variables%20for%20asg.png)
 
 - Refactoring the code for **security** folder:
 
 **outputs.tf**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/outputs%20for%20sg.png)
+![](./img/project18/outputs%20for%20sg.png)
 
 - Refactoring the code for **EFS** folder:
 
 **variables.tf**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/variables%20for%20efs.png)
+![](./img/project18/variables%20for%20efs.png)
 
 - Refactoring the code for **RDS** folder:
 
 **variables.tf**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/variables%20for%20rds.png)
+![](./img/project18/variables%20for%20rds.png)
 
 - Refactoring the code the root **main.tf** folder:
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/main.tf.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/main.tf-2.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/main.tf-3.png)
+![](./img/project18/main.tf.png)
+![](./img/project18/main.tf-2.png)
+![](./img/project18/main.tf-3.png)
 
-- The complete code structure is stored in this [repo](https://github.com/somex6/terraform-cloud)
+- The complete code structure is stored in this [repo](https://github.com/apotitech/terraform-cloud)
 
 ## STEP 3: Executing The Terraform Plan
 
 - To ensure the validation of the whole setup, running the command **terraform validate**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/terraform%20validate.png)
+![](./img/project18/terraform%20validate.png)
 
 - Testing the configuration by running the command **terraform plan**
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/terraform%20plan.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/terraform%20plan-2.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/terraform%20plan-3.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/terraform%20plan-4.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/terraform%20plan-5.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project18/terraform%20plan-6.png)
+![](./img/project18/terraform%20plan.png)
+![](./img/project18/terraform%20plan-2.png)
+![](./img/project18/terraform%20plan-3.png)
+![](./img/project18/terraform%20plan-4.png)
+![](./img/project18/terraform%20plan-5.png)
+![](./img/project18/terraform%20plan-6.png)
